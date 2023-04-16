@@ -16,8 +16,6 @@ export class TrendingSubjectsComponent implements OnInit {
   allBooks: Book[] = [];
   currentOffset: number = 0;
   currentLimit: number = 10;
-  query: string;
-  results: any[];
 
   constructor(
     private route: ActivatedRoute,

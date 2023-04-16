@@ -18,8 +18,6 @@ export class HomeComponent implements OnInit {
   allBooks: Book[] = [];
   currentOffset: number = 0;
   currentLimit: number = 10;
-  query: string;
-  results: any[];
 
   constructor(
     private subjectsService: SubjectsService,
