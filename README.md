@@ -1,5 +1,21 @@
 # Fyle Frontend Challenge
 
+I have successfully implemented the following features in the application:
+
+1. Search by book title or author name: Users can now search for books based on either the title or author name. The search functionality is implemented to fetch relevant results based on user input.
+
+2. Paginated results: The search results are paginated, allowing users to view a limited number of results per page and navigate through the pages to view more results.
+
+3. Clear search text: Users can easily clear the search text input field to reset the search and start a new search query.
+
+4. Handling edge cases related to API calls: The application is designed to handle various edge cases related to API calls, such as handling errors, displaying proper messages when no results are found.
+
+5. Loaders while fetching data: Loaders are implemented on the page to provide visual feedback to users while fetching data from APIs, ensuring a smooth user experience during data retrieval.
+
+6. Back button: A Back button is added to the Trending Subjects page, allowing users to easily navigate back to the home page from the Trending Subjects page.
+
+7. Caching API responses: Caching mechanisms are implemented to store API responses locally, improving performance and reducing unnecessary API calls, thereby optimizing the application's data retrieval process.
+
 ## Who is this for?
 
 This challenge is meant for candidates who wish to intern at Fyle and work with our engineering team. The candidate should be able to commit to at least 6 months of dedicated time for internship.
