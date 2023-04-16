@@ -22,7 +22,7 @@
             book.author_name : !book.authors ? 'unknown' :
             book.authors.length > 0 ? book.authors[0].name : "unknown" }}
           </td>
-          <td>{{ book.first_publish_year }}</td>
+          <td>{{ book.first_publish_year > 0 ? book.first_publish_year : "unknown" }}</td>
         </tr>
       </tbody>
     </table>
