@@ -64,6 +64,8 @@ export class HomeComponent implements OnInit {
     { name: 'HTML' },
     { name: 'Harry Potter' },
     { name: 'Crypto' },
+    { name: 'Angular' },
+    { name: 'WrongInputabcd' },
   ];
 
   ngOnInit(): void {

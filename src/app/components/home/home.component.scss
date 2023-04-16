@@ -12,7 +12,7 @@
 
 .header {
   background-color: #fff;
-  height: 8vh;
+  height: auto;
 }
 
 .logo {
@@ -61,14 +61,6 @@
 
 .topbook{
   display: none;
-}
-
-.trending-subjects {
-  @apply
-  tw-bg-table-header-bg
-  tw-p-12-px
-  tw-w-full
-  md:tw-w-auto
 }
 
 .pagebtn {
@@ -124,9 +116,8 @@
 .trending-subjects {
   background:linear-gradient(146deg, #7222e3 19.67%, #ffe4fb 127.56%);
   background-color: #8143d9;
-  width: 100%; 
+  width: 200px; 
   border-radius: 8px;
-  max-width: 200px; 
   padding: 16px;
   display: flex;
   color: white;
@@ -136,6 +127,39 @@
   height: 89vh;
   margin: 10px;
   overflow-y: hidden;
+}
+
+@media (max-width: 767px) {
+   .trending-subjects {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: auto;
+    max-width: 95%;
+  }
+
+  .trending-subjects ul {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .trending-subjects ul li {
+    flex-shrink: 0;
+  }
+
+  .trending-list{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    margin: 0;
+  }
+  .home-button{
+    display: none !important;
+  }
 }
 
 .home-button {

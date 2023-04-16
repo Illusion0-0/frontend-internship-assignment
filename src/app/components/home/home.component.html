@@ -10,13 +10,13 @@
     </div>
   </div>
 
-  <div class="tw-flex tw-flex-row">
+  <div class="tw-flex tw-flex-col tw-justify-between tw-items-center md:tw-flex-row">
     <section class="trending-subjects">
       <div class="home-button">
         <mat-icon class="home-icon" aria-label="Home Icon">home</mat-icon>
         <div class="home-text">Home</div>
       </div>
-      <ul class="tw-list-none tw-pl-0">
+      <ul class="tw-list-none tw-pl-0 trending-list">
         <li class="tw-text-16-px tw-cursor-pointer tw-p-12-px" *ngFor="let subject of trendingSubjects"
           routerLink="/trending-subject/{{ subject.name }}">
           {{ subject.name }}
