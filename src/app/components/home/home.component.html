@@ -1,23 +1,58 @@
-<div class="header">
-  <div class="tw-text-24-px tw-font-600">Open Books Library</div>
-  <div class="search-button">
-    <mat-icon class="tw-mt-16-px" aria-label="Search Icon">search</mat-icon>
-    <input
-      [formControl]="bookSearch"
-      name="searchKey"
-      type="text"
-      placeholder="Search Books"
-      class="tw-border-0 tw-bg-inherit"
-    >
+<div class="main">
+  <div class="header">
+    <div class="logo">Open Books Library</div>
+    <div class="search-button">
+      <mat-icon class="search-icon" aria-label="Search Icon" (click)="onIconClick()">search</mat-icon>
+      <input [formControl]="bookSearch" name="searchKey" type="text" placeholder="Search Books..." class="search-input"
+        (keydown.enter)="onIconClick()">
+      <mat-icon class="clear-icon" aria-label="Clear Search Icon" (click)="clearSearch()"
+        *ngIf="bookSearch.value.length > 0">close</mat-icon>
+    </div>
   </div>
-</div>
-<div class="tw-flex tw-flex-row tw-m-24-px">
-  <section class="trending-subjects">
-    <div class="tw-font-600 tw-text-24-px">Trending Subjects</div>
-    <ul class="tw-list-none tw-pl-0">
-      <li class="tw-text-16-px tw-cursor-pointer tw-p-12-px" *ngFor="let subject of trendingSubjects" routerLink="/trending-subject/{{ subject.name }}">
-        {{ subject.name }}
-      </li>
-    </ul>
-  </section>
+
+  <div class="tw-flex tw-flex-row">
+    <section class="trending-subjects">
+      <div class="home-button">
+        <mat-icon class="home-icon" aria-label="Home Icon">home</mat-icon>
+        <div class="home-text">Home</div>
+      </div>
+      <ul class="tw-list-none tw-pl-0">
+        <li class="tw-text-16-px tw-cursor-pointer tw-p-12-px" *ngFor="let subject of trendingSubjects"
+          routerLink="/trending-subject/{{ subject.name }}">
+          {{ subject.name }}
+        </li>
+      </ul>
+    </section>
+
+
+    <section class="tw-flex-1 tw-flex tw-items-center tw-justify-center">
+      <div class="loader-container" *ngIf="isLoading">
+        <div class="loader"></div>
+      </div>
+      <div *ngIf="searchToggle == false; else Books" class="tw-w-full tw-text-center tw-mt-8">
+        <i>Search book by title or author . . .</i>
+      </div>
+      <ng-template #Books>
+        <div class="tw-flex-1">
+          <div *ngIf="allBooks.length > 0 && !isLoading" class="tw-mx-auto w-full">
+            <front-end-internship-assignment-table-view [booksList]="allBooks"
+              [subjectName]="subjectName"></front-end-internship-assignment-table-view>
+          </div>
+
+          <div *ngIf="allBooks.length == 0 && !isLoading">
+            <div class="tw-h-full tw-flex tw-justify-center tw-items-center">
+              <i>Sorry, we couldn't find any books matching "{{subjectName}}".</i>
+            </div>
+          </div>
+          <footer *ngIf="allBooks.length > 0 && !isLoading"
+            class="tw-flex tw-items-center tw-justify-center tw-m-24-px ">
+            <div class="paginator">
+              <button (click)="onClickPrevious()" class="pagebtn">Previous</button>
+              <button (click)="onClickNext()" class="pagebtn">Next</button>
+            </div>
+          </footer>
+        </div>
+      </ng-template>
+    </section>
+  </div>
 </div>

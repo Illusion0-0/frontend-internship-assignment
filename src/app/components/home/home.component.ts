@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { debounceTime, filter } from 'rxjs';
+import { debounceTime } from 'rxjs';
+import { Book } from 'src/app/core/models/book-response.model';
+import { SubjectsService } from '../../core/services/subjects.service';
+
 
 @Component({
   selector: 'front-end-internship-assignment-home',
@@ -9,9 +12,52 @@ import { debounceTime, filter } from 'rxjs';
 })
 export class HomeComponent implements OnInit {
   bookSearch: FormControl;
+  searchToggle: boolean;
+  subjectName: string;
+  isLoading: boolean = false;
+  allBooks: Book[] = [];
+  currentOffset: number = 0;
+  currentLimit: number = 10;
+  query: string;
+  results: any[];
 
-  constructor() {
+  constructor(
+    private subjectsService: SubjectsService,
+  ) {
     this.bookSearch = new FormControl('');
+    this.searchToggle = false;
+    this.subjectName = '';
+  }
+
+  onClickPrevious() {
+    if (this.currentOffset >= 10) {
+      this.currentOffset = this.currentOffset - this.currentLimit;
+      this.getSerchResults();
+    }
+  }
+
+  onClickNext() {
+    this.currentOffset = this.currentOffset + this.currentLimit;
+    this.getSerchResults();
+  }
+
+  getSerchResults() {
+    this.subjectsService.searchForBooks(this.subjectName, this.currentLimit, this.currentOffset).subscribe((data) => {
+      this.allBooks = data?.docs;
+      this.isLoading = false;
+    });
+  }
+
+  onIconClick() {
+    this.isLoading = true;
+    this.searchToggle = true;
+    this.subjectName = this.bookSearch.value;
+    console.log(this.subjectName);
+    this.getSerchResults();
+  }
+
+  clearSearch() {
+    this.bookSearch.setValue('');
   }
 
   trendingSubjects: Array<any> = [
@@ -28,6 +74,7 @@ export class HomeComponent implements OnInit {
         debounceTime(300),
       ).
       subscribe((value: string) => {
+        console.log(value);
       });
   }
 }
