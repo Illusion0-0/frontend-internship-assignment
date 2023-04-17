@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
   allBooks: Book[] = [];
   currentOffset: number = 0;
   currentLimit: number = 10;
+  currentPage: number = 1;
 
   constructor(
     private subjectsService: SubjectsService,
@@ -31,12 +32,16 @@ export class HomeComponent implements OnInit {
     if (this.currentOffset >= 10) {
       this.currentOffset = this.currentOffset - this.currentLimit;
       this.getSerchResults();
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
     }
   }
 
   onClickNext() {
     this.currentOffset = this.currentOffset + this.currentLimit;
     this.getSerchResults();
+    this.currentPage++;
   }
 
   getSerchResults() {
