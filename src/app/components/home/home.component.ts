@@ -32,8 +32,8 @@ export class HomeComponent implements OnInit {
     if (this.currentOffset >= 10) {
       this.currentOffset = this.currentOffset - this.currentLimit;
       this.getSerchResults();
-      if (this.currentPage > 1) {
-        this.currentPage--;
+      if (this.currentPage > 10) {
+        this.currentPage-=10;
       }
     }
   }
@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
   onClickNext() {
     this.currentOffset = this.currentOffset + this.currentLimit;
     this.getSerchResults();
-    this.currentPage++;
+    this.currentPage+=10;
   }
 
   getSerchResults() {
