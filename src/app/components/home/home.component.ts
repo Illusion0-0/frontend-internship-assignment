@@ -63,7 +63,7 @@ export class HomeComponent implements OnInit {
       this.allBooks = data?.docs;
       this.isLoading = false;
       if (this.subjectName !== null) {
-        const expiration = new Date().getTime() + (10 * 1000);
+        const expiration = new Date().getTime() + (24 * 60 * 60 * 1000);
         const cachedData = { data: data?.docs, expiration };
         localStorage.setItem(cacheKey, JSON.stringify(cachedData));
       }
@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit {
           localStorage.removeItem(key!);
         }
       }
-    }, 10 * 1000);
+    }, 24 * 60 * 60 * 1000); // 24 hours
 
   }
 
