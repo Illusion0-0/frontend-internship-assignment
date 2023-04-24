@@ -31,32 +31,64 @@ export class HomeComponent implements OnInit {
   onClickPrevious() {
     if (this.currentOffset >= 10) {
       this.currentOffset = this.currentOffset - this.currentLimit;
-      this.getSerchResults();
+      this.getSearchResults();
       if (this.currentPage > 10) {
-        this.currentPage-=10;
+        this.currentPage -= 10;
       }
     }
   }
 
   onClickNext() {
     this.currentOffset = this.currentOffset + this.currentLimit;
-    this.getSerchResults();
-    this.currentPage+=10;
+    this.getSearchResults();
+    this.currentPage += 10;
   }
 
-  getSerchResults() {
+  getSearchResults() {
+    const cacheKey = `${this.subjectName}${this.currentOffset}${this.currentLimit}`;
+    const cachedResponse = localStorage.getItem(cacheKey);
+
+    if (cachedResponse) {
+      const cachedData = JSON.parse(cachedResponse);
+      if (cachedData.expiration > new Date().getTime()) {
+        this.allBooks = cachedData.data;
+        this.isLoading = false;
+        return;
+      }
+      // remove expired cached data
+      localStorage.removeItem(cacheKey);
+    }
+
     this.subjectsService.searchForBooks(this.subjectName, this.currentLimit, this.currentOffset).subscribe((data) => {
       this.allBooks = data?.docs;
       this.isLoading = false;
+      if (this.subjectName !== null) {
+        const expiration = new Date().getTime() + (10 * 1000);
+        const cachedData = { data: data?.docs, expiration };
+        localStorage.setItem(cacheKey, JSON.stringify(cachedData));
+      }
     });
+
+    setTimeout(() => {
+      for (let i = localStorage.length - 1; i >= 0; i--) {
+        const key = localStorage.key(i);
+        const cachedData = JSON.parse(localStorage.getItem(key!)!);
+        if (cachedData?.expiration && cachedData.expiration <= new Date().getTime()) {
+          localStorage.removeItem(key!);
+        }
+      }
+    }, 10 * 1000);
+
   }
+
+
 
   onIconClick() {
     this.isLoading = true;
     this.searchToggle = true;
     this.subjectName = this.bookSearch.value;
     console.log(this.subjectName);
-    this.getSerchResults();
+    this.getSearchResults();
   }
 
   clearSearch() {
