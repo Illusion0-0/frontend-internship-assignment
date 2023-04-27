@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
   currentOffset: number = 0;
   currentLimit: number = 10;
   currentPage: number = 1;
+  wrongInput: string = '';
 
   constructor(
     private subjectsService: SubjectsService,
@@ -86,10 +87,20 @@ export class HomeComponent implements OnInit {
   onIconClick() {
     this.isLoading = true;
     this.searchToggle = true;
-    this.subjectName = this.bookSearch.value;
+    this.wrongInput = this.bookSearch.value;
+    const regex = /^[^\w\d]+|[^\w\d]+$/g; // regex to match non-alphanumeric characters at the beginning or end of the string
+    this.subjectName = this.bookSearch.value.replace(regex, '');
     console.log(this.subjectName);
-    this.getSearchResults();
+    if (this.subjectName !== '') {
+      this.getSearchResults();
+    } else {
+      this.isLoading = false;
+      this.allBooks = [];
+    }
+    console.log(this.allBooks);
   }
+
+
 
   clearSearch() {
     this.bookSearch.setValue('');

@@ -34,16 +34,18 @@
       </div>
       <ng-template #Books>
         <div class="tw-flex-1">
-          <div *ngIf="allBooks.length > 0 && !isLoading" class="tw-mx-auto w-full">
-            <front-end-internship-assignment-table-view [booksList]="allBooks"
-              [subjectName]="subjectName"></front-end-internship-assignment-table-view>
-          </div>
-
-          <div *ngIf="allBooks.length == 0 && !isLoading">
-            <div class="tw-h-full tw-flex tw-justify-center tw-items-center">
-              <i>Sorry, we couldn't find any books matching "{{subjectName}}".</i>
+          <ng-container *ngIf="allBooks.length > 0 && !isLoading; else noBooksFound">
+            <div class="tw-mx-auto w-full">
+              <front-end-internship-assignment-table-view [booksList]="allBooks"
+                [subjectName]="subjectName"></front-end-internship-assignment-table-view>
             </div>
-          </div>
+          </ng-container>
+
+          <ng-template #noBooksFound>
+            <div *ngIf="(wrongInput || allBooks.length == 0) && !isLoading" class="tw-h-full tw-flex tw-justify-center tw-items-center">
+              <i>Sorry, we couldn't find any books matching "{{wrongInput}}".</i>
+            </div>
+          </ng-template>
           <footer *ngIf="allBooks.length > 0 && !isLoading"
             class="tw-flex tw-items-center tw-justify-center tw-m-24-px ">
             <div class="paginator">
